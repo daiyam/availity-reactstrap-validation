@@ -1,16 +1,14 @@
-[![Build Status](https://travis-ci.org/Availity/availity-reactstrap-validation.svg?branch=master)](https://travis-ci.org/Availity/availity-reactstrap-validation) [![Coverage Status](https://coveralls.io/repos/github/Availity/availity-reactstrap-validation/badge.svg?branch=master)](https://coveralls.io/github/Availity/availity-reactstrap-validation?branch=master)
-
-# availity-reactstrap-validation
+# [@daiyam/availity-reactstrap-validation](https://github.com/daiyam/availity-reactstrap-validation)
 
 Easy to use React validation components compatible for reactstrap.
 
 
 ## Installation
 
-Install `availity-reactstrap-validation` via NPM
+Install `@daiyam/availity-reactstrap-validation` via NPM
 
 ```sh
-npm install --save availity-reactstrap-validation
+npm install --save @daiyam/availity-reactstrap-validation
 ```
 
 If applicable, install a `Promise` polyfill.  For example:

@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Availity/availity-reactstrap-validation.git"
+    "url": "https://github.com/daiyam/availity-reactstrap-validation.git"
   },
   "files": [
     "LICENSE",
@@ -50,9 +50,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Availity/availity-reactstrap-validation/issues"
+    "url": "https://github.com/daiyam/availity-reactstrap-validation/issues"
   },
-  "homepage": "https://github.com/Availity/availity-reactstrap-validation",
+  "homepage": "https://github.com/daiyam/availity-reactstrap-validation",
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.6",
