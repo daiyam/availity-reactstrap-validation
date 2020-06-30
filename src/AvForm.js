@@ -104,11 +104,10 @@ export default class AvForm extends InputContainer {
 
     this.updateInputs();
 
-    this.props.onSubmit(e, errors, values);
     if (isValid) {
-      this.props.onValidSubmit(e, values);
+      this.props.onValidSubmit(this, values);
     } else {
-      this.props.onInvalidSubmit(e, errors, values);
+      this.props.onInvalidSubmit(this, errors, values);
     }
 
     !this.state.submitted && this._isMounted && this.setState({submitted: true});
