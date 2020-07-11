@@ -234,6 +234,8 @@ export default class AvForm extends InputContainer {
 
   reset() {
     Object.keys(this._inputs).forEach(inputName => this._inputs[inputName] && this._inputs[inputName].reset());
+    
+    this._isMounted && this.setState({submitted: false});
   }
 
   updateInputs() {
