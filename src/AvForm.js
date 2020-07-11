@@ -90,6 +90,8 @@ export default class AvForm extends InputContainer {
 
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
+      
+      e.persist();
     }
 
     if (this.props.disabled) {
@@ -104,10 +106,12 @@ export default class AvForm extends InputContainer {
 
     this.updateInputs();
 
+    this.props.onSubmit(e, errors, values, this);
+    
     if (isValid) {
-      this.props.onValidSubmit(this, values);
+      this.props.onValidSubmit(e, values, this);
     } else {
-      this.props.onInvalidSubmit(this, errors, values);
+      this.props.onInvalidSubmit(e, errors, values, this);
     }
 
     !this.state.submitted && this._isMounted && this.setState({submitted: true});
