@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AvInput from './AvInput';
 import AvGroup from './AvGroup';
 import AvFeedback from './AvFeedback';
-import {Col, FormText, Label, CustomInput} from 'reactstrap';
+import {Col, FormText, Label, CustomInput, InputGroup} from 'reactstrap';
 
 const colSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 
@@ -28,6 +28,7 @@ export default class AvField extends Component {
     groupAttrs: PropTypes.object,
     grid: PropTypes.object,
     className: PropTypes.string,
+    groupClass: PropTypes.string,
   });
 
   static contextTypes = {
@@ -71,6 +72,7 @@ export default class AvField extends Component {
       labelAttrs,
       groupAttrs,
       className,
+      groupClass,
       ...attributes
     } = this.props;
 
@@ -85,22 +87,10 @@ export default class AvField extends Component {
       });
     }
 
-    const input = (<AvInput
-      id={id}
-      className={inputClass}
-      size={size}
-      disabled={disabled}
-      readOnly={readOnly}
-      {...attributes}
-    >
-      {children}
-    </AvInput>);
-
     const validation = this.context.FormCtrl.getInputState(this.props.name);
 
     const feedback = validation.errorMessage ? (<AvFeedback>{validation.errorMessage}</AvFeedback>) : null;
     const help = helpMessage ? (<FormText>{helpMessage}</FormText>) : null;
-    const inputRow = row ? <Col {...col}>{input}{feedback}{help}</Col> : input;
     const check = attributes.type === 'checkbox';
 
     if (
@@ -110,7 +100,28 @@ export default class AvField extends Component {
     ) {
       return <AvGroup className="mb-0"><AvInput {...this.props}>{feedback}{help}</AvInput></AvGroup>;
     }
-
+    
+    const input = children ? <InputGroup className={groupClass}>
+      <AvInput
+        id={id}
+        className={inputClass}
+        size={size}
+        disabled={disabled}
+        readOnly={readOnly}
+        {...attributes}
+      />
+      {children}
+    </InputGroup> : <AvInput
+      id={id}
+      className={inputClass}
+      size={size}
+      disabled={disabled}
+      readOnly={readOnly}
+      {...attributes}
+    />;
+    
+    const inputRow = row ? <Col {...col}>{input}{feedback}{help}</Col> : input;
+    
     return (
       <AvGroup className={className} check={check} disabled={disabled} row={row} {...groupAttrs}>
         {check && inputRow}
