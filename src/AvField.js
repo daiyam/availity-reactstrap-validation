@@ -27,6 +27,7 @@ export default class AvField extends Component {
     labelAttrs: PropTypes.object,
     groupAttrs: PropTypes.object,
     grid: PropTypes.object,
+    className: PropTypes.string,
   });
 
   static contextTypes = {
@@ -69,6 +70,7 @@ export default class AvField extends Component {
       grid,
       labelAttrs,
       groupAttrs,
+      className,
       ...attributes
     } = this.props;
 
@@ -110,7 +112,7 @@ export default class AvField extends Component {
     }
 
     return (
-      <AvGroup check={check} disabled={disabled} row={row} {...groupAttrs}>
+      <AvGroup className={className} check={check} disabled={disabled} row={row} {...groupAttrs}>
         {check && inputRow}
         {label && <Label
           for={id}

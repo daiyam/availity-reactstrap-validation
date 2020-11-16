@@ -12,7 +12,7 @@ import isString from 'lodash/isString';
 const getInputErrorMessage = (input, ruleName) => {
   const errorMessage = input && input.props && input.props.errorMessage;
 
-  if (typeof errorMessage === 'object') {
+  if (errorMessage && typeof errorMessage === 'object') {
     return errorMessage[ruleName];
   }
   return errorMessage;
