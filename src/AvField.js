@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import AvInput from './AvInput';
 import AvGroup from './AvGroup';
@@ -101,7 +102,13 @@ export default class AvField extends Component {
       return <AvGroup className="mb-0"><AvInput {...this.props}>{feedback}{help}</AvInput></AvGroup>;
     }
     
-    const input = children ? <InputGroup className={groupClass}>
+    const touched = this.context.FormCtrl.isTouched(this.props.name);
+    const hasError = this.context.FormCtrl.hasError(this.props.name);
+    
+    const input = children ? <InputGroup className={classNames(
+      groupClass,
+      touched && hasError && 'is-invalid',
+    )}>
       <AvInput
         id={id}
         className={inputClass}
