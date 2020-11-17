@@ -29,7 +29,8 @@ export default class AvField extends Component {
     groupAttrs: PropTypes.object,
     grid: PropTypes.object,
     className: PropTypes.string,
-    groupClass: PropTypes.string,
+    customLabel: PropTypes.func,
+    customGroup: PropTypes.func,
   });
 
   static contextTypes = {
@@ -73,7 +74,8 @@ export default class AvField extends Component {
       labelAttrs,
       groupAttrs,
       className,
-      groupClass,
+      customLabel: CustomLabel,
+      customGroup: CustomGroup,
       ...attributes
     } = this.props;
 
@@ -105,34 +107,58 @@ export default class AvField extends Component {
     const touched = this.context.FormCtrl.isTouched(this.props.name);
     const hasError = this.context.FormCtrl.hasError(this.props.name);
     
-    const input = children ? <InputGroup className={classNames(
-      groupClass,
-      touched && hasError && 'is-invalid',
-    )}>
-      <AvInput
+    let input;
+    if (CustomGroup) {
+      input = (
+        <CustomGroup className={classNames(
+          touched && hasError && 'is-invalid',
+        )}>
+          {label && <Label
+            for={id}
+            className={labelClass}
+            hidden={labelHidden}
+            size={size}
+            {...labelCol}
+            {...labelAttrs}
+          >
+            {label}
+          </Label>}
+          {CustomLabel && <CustomLabel
+            for={id}
+            className={labelClass}
+            hidden={labelHidden}
+            size={size}
+            {...labelCol}
+            {...labelAttrs}
+          />}
+          <AvInput
+            id={id}
+            className={inputClass}
+            size={size}
+            disabled={disabled}
+            readOnly={readOnly}
+            {...attributes}
+          />
+        </CustomGroup>
+      )
+    }
+    else {
+      input = <AvInput
         id={id}
         className={inputClass}
         size={size}
         disabled={disabled}
         readOnly={readOnly}
         {...attributes}
-      />
-      {children}
-    </InputGroup> : <AvInput
-      id={id}
-      className={inputClass}
-      size={size}
-      disabled={disabled}
-      readOnly={readOnly}
-      {...attributes}
-    />;
+      />;
+    }
     
     const inputRow = row ? <Col {...col}>{input}{feedback}{help}</Col> : input;
     
     return (
       <AvGroup className={className} check={check} disabled={disabled} row={row} {...groupAttrs}>
         {check && inputRow}
-        {label && <Label
+        {!CustomGroup && label && <Label
           for={id}
           className={labelClass}
           hidden={labelHidden}
@@ -142,6 +168,14 @@ export default class AvField extends Component {
         >
           {label}
         </Label>}
+        {!CustomGroup && CustomLabel && <CustomLabel
+          for={id}
+          className={labelClass}
+          hidden={labelHidden}
+          size={size}
+          {...labelCol}
+          {...labelAttrs}
+        />}
         {!check && inputRow}
         {!row && feedback}
         {!row && help}

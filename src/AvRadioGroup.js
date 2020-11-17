@@ -13,6 +13,11 @@ const noop = () => {};
 export default class AvRadioGroup extends Component {
   static propTypes = Object.assign({}, FormGroup.propTypes, {
     name: PropTypes.string.isRequired,
+    fieldset: PropTypes.bool,
+    label: PropTypes.node,
+    labelHidden: PropTypes.bool,
+    customLabel: PropTypes.func,
+    customGroup: PropTypes.func,
   });
 
   static contextTypes = {
@@ -175,43 +180,91 @@ export default class AvRadioGroup extends Component {
   }
 
   render() {
-    const legend = this.props.label ? <legend>{this.props.label}</legend> : '';
     const validation = this.getInputState();
     const {
       errorMessage: omit1,
       validate: omit2,
       validationEvent: omit3,
       state: omit4,
-      label: omit5,
+      label,
+      labelHidden,
+      labelClass,
       required: omit6,
-      inline: omit7,
+      inline,
       children,
+      fieldset,
+      customLabel: CustomLabel,
+      customGroup: CustomGroup,
       ...attributes
     } = this.props;
+    
+    const id = this.props.name;
 
     const touched = this.context.FormCtrl.isTouched(this.props.name);
     const hasError = this.context.FormCtrl.hasError(this.props.name);
 
     const classes = classNames(
-      'form-control border-0 p-0 h-auto',
+      'form-control',
+      inline && 'inline',
       touched ? 'is-touched' : 'is-untouched',
       this.context.FormCtrl.isDirty(this.props.name)
         ? 'is-dirty'
         : 'is-pristine',
       this.context.FormCtrl.isBad(this.props.name) ? 'is-bad-input' : null,
       hasError ? 'av-invalid' : 'av-valid',
-      touched && hasError && 'is-invalid'
+      touched && hasError && 'is-invalid',
     );
 
     const groupClass = classNames(
       attributes.className,
       touched && hasError && 'was-validated'
     );
-
+    
+    let input;
+    if (CustomGroup) {
+      input = (
+        <CustomGroup className={classNames(
+          touched && hasError && 'is-invalid',
+        )}>
+          {label && <Label
+            for={id}
+            className={labelClass}
+            hidden={labelHidden}
+          >
+            {label}
+          </Label>}
+          {CustomLabel && <CustomLabel
+            for={id}
+            className={labelClass}
+            hidden={labelHidden}
+          />}
+          <div className={classes}>{children}</div>
+        </CustomGroup>
+      )
+    }
+    else {
+      input = <div className={classes}>{children}</div>;
+    }
+    
+    if (fieldset) {
+      attributes.tag = 'fieldset'
+    }
+    
     return (
-      <FormGroup tag="fieldset" {...attributes} className={groupClass}>
-        {legend}
-        <div className={classes}>{children}</div>
+      <FormGroup className={groupClass} {...attributes}>
+        {!CustomGroup && label && (fieldset && <legend>{label}</legend> || <Label
+          for={id}
+          className={labelClass}
+          hidden={labelHidden}
+        >
+          {label}
+        </Label>)}
+        {!CustomGroup && CustomLabel && <CustomLabel
+          for={id}
+          className={labelClass}
+          hidden={labelHidden}
+        />}
+        {input}
         <AvFeedback>{validation.errorMessage}</AvFeedback>
       </FormGroup>
     );
