@@ -1,6 +1,6 @@
 {
   "name": "@daiyam/availity-reactstrap-validation",
-  "version": "2.6.1-d7",
+  "version": "2.6.1-d8",
   "author": "Evan Sharp <evan.sharp@availity.com>",
   "description": "Form validation helpers for reactstrap",
   "main": "lib/index.js",
@@ -21,7 +21,8 @@
     "prebuild": "babel src --out-dir lib",
     "lint": "eslint src",
     "create-release": "npm test && sh ./scripts/release",
-    "publish-release": "npm test && sh ./scripts/publish"
+    "publish-release": "npm test && sh ./scripts/publish",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
