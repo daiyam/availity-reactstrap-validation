@@ -138,19 +138,25 @@ export default class AvField extends Component {
             disabled={disabled}
             readOnly={readOnly}
             {...attributes}
-          />
+          >
+            {children}
+          </AvInput>
         </CustomGroup>
-      )
+      );
     }
     else {
-      input = <AvInput
-        id={id}
-        className={inputClass}
-        size={size}
-        disabled={disabled}
-        readOnly={readOnly}
-        {...attributes}
-      />;
+      input = (
+        <AvInput
+          id={id}
+          className={inputClass}
+          size={size}
+          disabled={disabled}
+          readOnly={readOnly}
+          {...attributes}
+        >
+          {children}
+        </AvInput>
+      );
     }
     
     const inputRow = row ? <Col {...col}>{input}{feedback}{help}</Col> : input;

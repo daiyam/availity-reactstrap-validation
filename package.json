@@ -1,6 +1,6 @@
 {
   "name": "@daiyam/availity-reactstrap-validation",
-  "version": "2.6.1-d6",
+  "version": "2.6.1-d7",
   "author": "Evan Sharp <evan.sharp@availity.com>",
   "description": "Form validation helpers for reactstrap",
   "main": "lib/index.js",
