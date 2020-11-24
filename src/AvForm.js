@@ -12,7 +12,7 @@ import isString from 'lodash/isString';
 const getInputErrorMessage = (input, ruleName) => {
   const errorMessage = input && input.props && input.props.errorMessage;
 
-  if (errorMessage && typeof errorMessage === 'object') {
+  if (typeof errorMessage === 'object') {
     return errorMessage[ruleName];
   }
   return errorMessage;
@@ -99,6 +99,10 @@ export default class AvForm extends InputContainer {
     }
 
     const values = this.getValues();
+    
+    if (this.props.beforeValidation) {
+      this.props.beforeValidation(e, values, this);
+    }
 
     const {isValid, errors} = await this.validateAll(values, false);
 
@@ -232,8 +236,13 @@ export default class AvForm extends InputContainer {
     this.handleSubmit(...args);
   }
 
-  reset() {
-    Object.keys(this._inputs).forEach(inputName => this._inputs[inputName] && this._inputs[inputName].reset());
+  reset(inputs) {
+    if(inputs) {
+      Object.keys(this._inputs).forEach(inputName => inputs.includes(inputName) && this._inputs[inputName] && this._inputs[inputName].reset());
+    }
+    else {
+      Object.keys(this._inputs).forEach(inputName => this._inputs[inputName] && this._inputs[inputName].reset());
+    }
     
     this._isMounted && this.setState({submitted: false});
   }
