@@ -39,6 +39,7 @@ export default class AvForm extends InputContainer {
     method: PropTypes.oneOf(['get', 'post']),
     onSubmit: PropTypes.func,
     beforeSubmitValidation: PropTypes.func,
+    beforeValidation: PropTypes.func,
     validate: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.array,
@@ -83,7 +84,7 @@ export default class AvForm extends InputContainer {
 
   validations = {};
 
-  handleSubmit = async (e) => {
+  handleSubmit = async (e, onSuccess, onError) => {
     if (this.props.beforeSubmitValidation) {
       this.props.beforeSubmitValidation(e);
     }
@@ -113,9 +114,9 @@ export default class AvForm extends InputContainer {
     this.props.onSubmit(e, errors, values, this);
     
     if (isValid) {
-      this.props.onValidSubmit(e, values, this);
+      this.props.onValidSubmit(e, values, this, onSuccess);
     } else {
-      this.props.onInvalidSubmit(e, errors, values, this);
+      this.props.onInvalidSubmit(e, errors, values, this, onError);
     }
 
     !this.state.submitted && this._isMounted && this.setState({submitted: true});
@@ -200,6 +201,7 @@ export default class AvForm extends InputContainer {
       disabled: omit9,
       readOnly: omit10,
       beforeSubmitValidation: omit11,
+      beforeValidation: omit12,
       className,
       ...attributes
     } = this.props;
