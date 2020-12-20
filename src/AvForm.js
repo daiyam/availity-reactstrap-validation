@@ -91,6 +91,7 @@ export default class AvForm extends InputContainer {
 
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
+      e.stopPropagation();
       
       e.persist();
     }
