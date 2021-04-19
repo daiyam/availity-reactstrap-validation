@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import {Input} from 'reactstrap';
+import { Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import AvBaseInput from './AvBaseInput';
 
 
@@ -33,6 +33,8 @@ export default class AvInput extends AvBaseInput {
       tag,
       getRef,
       id = this.props.name,
+      appendAddon,
+      prependAddon,
       ...attributes
     } = this.props;
 
@@ -61,7 +63,7 @@ export default class AvInput extends AvBaseInput {
 
     const value = this.getViewValue();
 
-    return (
+    const input = (
       <Tag {...attributes}
         ref={getRef}
         {...this.getValidatorProps()}
@@ -70,5 +72,24 @@ export default class AvInput extends AvBaseInput {
         id={id}
       />
     );
+    
+    if(appendAddon || prependAddon) {
+      return (
+        <InputGroup>
+          {
+            prependAddon &&
+            <InputGroupAddon addonType="prepend">{prependAddon}</InputGroupAddon>
+          }
+          { input }
+          {
+            appendAddon &&
+            <InputGroupAddon addonType="append">{appendAddon}</InputGroupAddon>
+          }
+        </InputGroup>
+      )
+    }
+    else {
+      return input
+    }
   }
 }

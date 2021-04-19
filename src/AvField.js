@@ -31,6 +31,8 @@ export default class AvField extends Component {
     className: PropTypes.string,
     customLabel: PropTypes.func,
     customGroup: PropTypes.func,
+    appendAddon: PropTypes.node,
+    prependAddon: PropTypes.node,
   });
 
   static contextTypes = {

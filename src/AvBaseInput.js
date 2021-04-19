@@ -51,6 +51,8 @@ export default class AvBaseInput extends Component {
     onBlur: PropTypes.func,
     onChange: PropTypes.func,
     onReset: PropTypes.func,
+    appendAddon: PropTypes.node,
+    prependAddon: PropTypes.node,
   };
 
   static contextTypes = {
