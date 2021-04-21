@@ -75,7 +75,12 @@ export default class AvInput extends AvBaseInput {
     
     if(appendAddon || prependAddon) {
       return (
-        <InputGroup>
+        <InputGroup
+          className={classNames(
+            hasError ? 'av-invalid' : 'av-valid',
+            touched && hasError && 'is-invalid',
+          )}
+        >
           {
             prependAddon &&
             <InputGroupAddon addonType="prepend">{prependAddon}</InputGroupAddon>

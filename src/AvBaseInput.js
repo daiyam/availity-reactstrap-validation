@@ -307,6 +307,5 @@ export default class AvBaseInput extends Component {
       });
 
     this.context.FormCtrl && this.context.FormCtrl.register(this);
-    this.validate();
   }
 }
